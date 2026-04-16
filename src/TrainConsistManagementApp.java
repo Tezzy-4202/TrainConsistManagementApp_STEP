@@ -1,63 +1,59 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
-class Bogie {
-    String name;
-    int capacity;
+public class TrainConsistApp {
 
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
+    // Method to perform Bubble Sort
+    public static void bubbleSort(int[] capacities) {
+        int n = capacities.length;
 
-    void display() {
-        System.out.println(name + " -> " + capacity);
-    }
-}
+        // Outer loop for number of passes
+        for (int i = 0; i < n - 1; i++) {
 
-public class TrainConsistMgmt {
-    public static void main(String[] args) {
+            // Inner loop for comparing adjacent elements
+            for (int j = 0; j < n - 1 - i; j++) {
 
-        System.out.println("================================");
-        System.out.println("UC10 Count Total Seats in Train");
-        System.out.println("================================\n");
-
-        List<Bogie> bogies = new ArrayList<>();
-
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 70));
-        bogies.add(new Bogie("AC Chair", 60));
-
-        System.out.println("All Bogies:");
-        bogies.forEach(b -> b.display());
-
-
-        List<Integer> capacities = bogies.stream()
-                .map(b -> b.capacity)
-                .collect(Collectors.toList());
-
-
-        int totalCapacity = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
-
-        System.out.println("\nTotal Seating Capacity: " + totalCapacity);
-
-
-        Map<String, List<Bogie>> groupedBogies = bogies.stream()
-                .collect(Collectors.groupingBy(b -> b.name));
-
-        System.out.println("\nGrouped Bogies:");
-
-        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
-            System.out.println("Bogie Type: " + entry.getKey());
-
-            for (Bogie b : entry.getValue()) {
-                System.out.println("Capacity -> " + b.capacity);
+                // Swap if elements are in wrong order
+                if (capacities[j] > capacities[j + 1]) {
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
             }
         }
-        System.out.println("\nUC10 aggregation completed...");
+    }
+
+    // Method to display array
+    public static void display(int[] capacities) {
+        for (int cap : capacities) {
+            System.out.print(cap + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Train Consist Management App ===");
+        System.out.print("Enter number of passenger bogies: ");
+        int n = scanner.nextInt();
+
+        int[] capacities = new int[n];
+
+        // Input capacities
+        System.out.println("Enter capacities:");
+        for (int i = 0; i < n; i++) {
+            capacities[i] = scanner.nextInt();
+        }
+
+        System.out.println("\nBefore Sorting:");
+        display(capacities);
+
+        // Perform Bubble Sort
+        bubbleSort(capacities);
+
+        System.out.println("\nAfter Sorting (Ascending Order):");
+        display(capacities);
+
+        scanner.close();
     }
 }
