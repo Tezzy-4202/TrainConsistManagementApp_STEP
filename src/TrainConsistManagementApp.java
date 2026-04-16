@@ -1,11 +1,20 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class TrainConsistApp {
 
-    // Method to sort bogie names using Arrays.sort()
-    public static void sortBogieNames(String[] bogieNames) {
-        Arrays.sort(bogieNames); // Built-in optimized sorting
+    // Method to perform Linear Search
+    public static boolean searchBogie(String[] bogieIds, String searchKey) {
+
+        // Traverse the array sequentially
+        for (int i = 0; i < bogieIds.length; i++) {
+
+            // Compare using equals()
+            if (bogieIds[i].equals(searchKey)) {
+                return true; // Match found → early termination
+            }
+        }
+
+        return false; // No match found
     }
 
     public static void main(String[] args) {
@@ -17,24 +26,27 @@ public class TrainConsistApp {
         int n = scanner.nextInt();
         scanner.nextLine(); // consume newline
 
-        String[] bogieNames = new String[n];
+        String[] bogieIds = new String[n];
 
-        // Input bogie names
-        System.out.println("Enter bogie names:");
+        // Input bogie IDs
+        System.out.println("Enter bogie IDs:");
         for (int i = 0; i < n; i++) {
-            bogieNames[i] = scanner.nextLine();
+            bogieIds[i] = scanner.nextLine();
         }
 
-        // Before sorting
-        System.out.println("\nBefore Sorting:");
-        System.out.println(Arrays.toString(bogieNames));
+        // Input search key
+        System.out.print("\nEnter bogie ID to search: ");
+        String searchKey = scanner.nextLine();
 
-        // Sorting using Arrays.sort()
-        sortBogieNames(bogieNames);
+        // Perform Linear Search
+        boolean found = searchBogie(bogieIds, searchKey);
 
-        // After sorting
-        System.out.println("\nAfter Sorting (Alphabetical Order):");
-        System.out.println(Arrays.toString(bogieNames));
+        // Display result
+        if (found) {
+            System.out.println("Bogie ID " + searchKey + " found in the train consist.");
+        } else {
+            System.out.println("Bogie ID " + searchKey + " NOT found.");
+        }
 
         scanner.close();
     }
